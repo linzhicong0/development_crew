@@ -2,6 +2,13 @@ from crewai import Agent, Crew, Process, Task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from crewai.project import CrewBase, agent, crew, task
 
+from development_crew.tools.jira_tool import (
+    JiraCreateIssueTool,
+    JiraGetIssueTool,
+    JiraSearchIssuesTool,
+    JiraUpdateIssueTool,
+)
+
 
 @CrewBase
 class RequirementsCrew:
@@ -13,16 +20,26 @@ class RequirementsCrew:
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
 
+    def _jira_tools(self):
+        return [
+            JiraCreateIssueTool(),
+            JiraGetIssueTool(),
+            JiraSearchIssuesTool(),
+            JiraUpdateIssueTool(),
+        ]
+
     @agent
     def product_manager(self) -> Agent:
         return Agent(
             config=self.agents_config["product_manager"],
+            tools=self._jira_tools(),
         )
 
     @agent
     def business_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config["business_analyst"],
+            tools=self._jira_tools(),
         )
 
     @task

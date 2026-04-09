@@ -9,16 +9,80 @@ product_definition_task:
     Produce the following:
     - A clear problem statement
     - Target users and their needs
-    - 3-8 user stories in "As a [user], I want [goal], so that [benefit]" format
+    - User stories in "As a [user], I want [goal], so that [benefit]" format
     - Acceptance criteria for each user story
     - Priority levels (must-have, should-have, nice-to-have)
     - Key assumptions and constraints
 
     Focus on what needs to be built, not how to build it.
+
+    ## Tracking user stories
+
+    You have Jira tools available. Start by attempting to search for existing issues
+    in the project to check for duplicates. If the Jira tools work, follow the
+    Jira-first workflow below. If they return an error saying Jira is not configured,
+    switch to the file-based workflow instead.
+
+    ### Jira-first workflow (when Jira is available)
+
+    1. Create a Jira Epic for {project_name} if one does not already exist. Use the
+       problem statement as the Epic summary and the full product context as the description.
+    2. For each user story, create a Jira Story issue under that Epic:
+       - **Summary:** Short descriptive title (e.g. "User registration and login")
+       - **Description:** Include the full user story sentence, detailed context, and
+         numbered acceptance criteria in a clear format
+       - **Priority:** Highest = must-have, High = should-have, Low = nice-to-have
+       - **Labels:** Add relevant feature-area labels (e.g. "auth", "payments", "dashboard")
+    3. After all stories are created, list all created issue keys in your output
+       for traceability.
+
+    ### File-based workflow (when Jira is not available)
+
+    Produce a single well-structured markdown document with the following format.
+    Each user story gets its own clearly delineated section so that individual stories
+    can be extracted, reviewed, and tracked independently:
+
+    ```
+    # {project_name} — Product Requirements
+
+    ## Problem Statement
+    <one-paragraph problem statement>
+
+    ## Target Users
+    - **Persona 1:** <description and needs>
+    - **Persona 2:** <description and needs>
+
+    ## User Stories
+
+    ### US-1: <short title>
+    - **Story:** As a [user], I want [goal], so that [benefit]
+    - **Priority:** Must-have / Should-have / Nice-to-have
+    - **Acceptance Criteria:**
+      1. [Given/When/Then or clear testable statement]
+      2. [Given/When/Then or clear testable statement]
+      3. [Given/When/Then or clear testable statement]
+
+    ### US-2: <short title>
+    - **Story:** As a [user], I want [goal], so that [benefit]
+    - **Priority:** Must-have / Should-have / Nice-to-have
+    - **Acceptance Criteria:**
+      1. ...
+      2. ...
+
+    (repeat for each user story)
+
+    ## Assumptions & Constraints
+    - <assumption or constraint>
+    - <assumption or constraint>
+    ```
+
   expected_output: >
-    A structured product requirements document containing a problem statement,
-    user stories with acceptance criteria, and priority classifications.
+    A structured product requirements document. If Jira is configured, all user stories
+    are created as Jira issues under a project Epic, and the output lists the issue keys.
+    If Jira is not available, a markdown document with each user story (US-N format)
+    containing Story, Priority, and numbered Acceptance Criteria.
   agent: product_manager
+  output_file: output/user_stories.md
 
 requirements_analysis_task:
   description: >
@@ -38,9 +102,112 @@ requirements_analysis_task:
     - Flag ambiguities or risks that need clarification
 
     Be thorough and specific — a developer should be able to implement from this alone.
+
+    ## Tracking detailed specifications
+
+    You have Jira tools available. If the Jira tools work, follow the Jira-first
+    workflow. If they return an error saying Jira is not configured, switch to the
+    file-based workflow instead.
+
+    ### Jira-first workflow (when Jira is available)
+
+    1. Search for the user stories created by the Product Manager in Jira.
+    2. For each user story, update its description with the detailed specifications:
+       - Functional requirements broken down from the story
+       - Edge cases and error scenarios
+       - Relevant data model fields and constraints
+       - API endpoints needed
+       - Non-functional requirements that apply
+    3. Add labels for technical domains (e.g. "database", "api", "security").
+    4. If any new tasks or sub-tasks are identified that were not captured as stories,
+       create them as Jira Task issues linked to the relevant story.
+    5. After all updates, list all updated issue keys in your output for traceability.
+
+    ### File-based workflow (when Jira is not available)
+
+    Produce a single well-structured markdown document. Reference user stories by
+    their US-N identifiers. Each functional requirement is numbered (FR-N) and
+    cross-referenced to its parent story:
+
+    ```
+    # {project_name} — Requirements Specification
+
+    ## Overview
+    <brief summary referencing the user stories document>
+
+    ## Functional Requirements
+
+    ### FR-1: <title> (ref: US-1)
+    **Description:** <detailed requirement>
+    **Edge Cases:**
+    - <edge case 1>
+    - <edge case 2>
+    **Error Handling:**
+    - <error scenario and expected behavior>
+
+    ### FR-2: <title> (ref: US-1)
+    ...
+
+    ### FR-3: <title> (ref: US-2)
+    ...
+
+    (group requirements under their parent user story)
+
+    ## Data Models
+
+    ### <ModelName>
+    | Field | Type | Required | Constraints | Description |
+    |-------|------|----------|-------------|-------------|
+    | id    | UUID | Yes      | Primary key | Unique identifier |
+    | ...   | ...  | ...      | ...         | ... |
+
+    ### <AnotherModel>
+    ...
+
+    ## API Endpoints
+
+    ### `POST /api/resource`
+    **Description:** <what it does>
+    **Auth:** Required / None
+    **Request Body:**
+    ```json
+    { "field": "value" }
+    ```
+    **Success Response (200):**
+    ```json
+    { "id": "...", "field": "value" }
+    ```
+    **Error Responses:**
+    - 400 Bad Request — <when>
+    - 404 Not Found — <when>
+
+    ### `GET /api/resource/:id`
+    ...
+
+    ## Non-Functional Requirements
+
+    | Category | Requirement | Target |
+    |----------|------------|--------|
+    | Performance | <e.g. page load time> | <e.g. < 2s at P95> |
+    | Security | <e.g. auth mechanism> | <e.g. OAuth 2.0 + JWT> |
+    | Scalability | <e.g. concurrent users> | <e.g. 10,000 concurrent> |
+    | Availability | <e.g. uptime target> | <e.g. 99.9%> |
+
+    ## Dependencies & Integrations
+    - **<Service/Library>:** <what it provides and why it's needed>
+    - **<External API>:** <what it's used for>
+
+    ## Risks & Open Questions
+    1. **<Risk/Question>:** <impact and suggested mitigation or clarification needed>
+    2. ...
+    ```
+
   expected_output: >
-    A comprehensive requirements specification document with detailed functional
-    requirements, data models, interface definitions, edge cases, and non-functional
-    requirements. No ambiguity should remain.
+    A comprehensive requirements specification. If Jira is configured, all user stories
+    are updated with detailed specs, new tasks are created as needed, and the output
+    lists all issue keys. If Jira is not available, a markdown document with numbered
+    functional requirements (FR-N) cross-referenced to user stories (US-N), data models
+    in table format, API endpoint definitions, non-functional requirements table,
+    dependencies, and risks. No ambiguity should remain.
   agent: business_analyst
   output_file: output/requirements.md
