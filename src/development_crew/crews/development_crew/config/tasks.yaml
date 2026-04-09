@@ -1,0 +1,27 @@
+development_task:
+  description: >
+    Implement the software for {project_name}.
+
+    Follow this technical design:
+    {technical_design}
+
+    Fulfill these requirements:
+    {requirements}
+
+    Implementation guidelines:
+    - Follow the technical design's file structure and architecture exactly
+    - Implement all features described in the requirements
+    - Write clean, well-structured code following the stack's conventions
+    - Include proper error handling for all edge cases identified in requirements
+    - Add configuration files (package.json, requirements.txt, etc.) as needed
+    - Include setup/build scripts if specified in the design
+    - Write inline comments only for complex or non-obvious logic
+    - Ensure all API endpoints match the technical design specification
+
+    Produce complete, runnable code — no stubs, TODOs, or placeholders.
+  expected_output: >
+    Complete source code implementation with all files needed to build and run
+    the project. Include configuration files, entry points, and any supporting
+    files. The code should be production-ready and match the technical design.
+  agent: developer
+  output_file: output/source_code.md

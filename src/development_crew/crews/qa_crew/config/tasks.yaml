@@ -1,0 +1,67 @@
+test_writing_task:
+  description: >
+    Write comprehensive tests for {project_name}.
+
+    Based on these requirements:
+    {requirements}
+
+    And this technical design:
+    {technical_design}
+
+    And this source code:
+    {source_code}
+
+    Write the following:
+    - Unit tests for all core functions and methods
+    - Integration tests for component interactions
+    - API endpoint tests (request/response validation, error handling)
+    - Edge case tests based on the requirements analysis
+    - Test fixtures and mocks as needed
+    - Test configuration and setup files
+
+    Follow the testing framework specified in the technical design.
+    Ensure tests are independent, repeatable, and cover:
+    - Happy paths for all user stories
+    - Error and failure scenarios
+    - Boundary conditions
+    - Input validation
+  expected_output: >
+    Complete test suite with all test files, fixtures, and configuration needed
+    to run the tests. Include clear test descriptions that map back to
+    requirements and acceptance criteria.
+  agent: qa_writer
+  output_file: output/test_code.md
+
+test_execution_task:
+  description: >
+    Review and validate the test suite for {project_name}.
+
+    Based on the requirements:
+    {requirements}
+
+    Source code:
+    {source_code}
+
+    Test code:
+    {test_code}
+
+    Analyze the test suite and report:
+    - Test coverage assessment (what's covered, what's missing)
+    - Identify any gaps between requirements and tests
+    - Classify each test result: PASS, FAIL, or ERROR
+    - For any failures, provide:
+      - Clear description of the failure
+      - Root cause analysis
+      - Severity level (Critical / High / Medium / Low)
+      - Suggested fix
+    - Overall quality assessment of the code
+
+    If issues are found that require code changes, flag them clearly
+    for the Technical Lead to triage and assign back to the developer.
+  expected_output: >
+    A test report with coverage assessment, individual test results,
+    failure analysis with root causes and severity, and a summary of
+    issues that need to be addressed. Clearly mark items that require
+    developer attention vs items that are acceptable.
+  agent: qa_runner
+  output_file: output/test_report.md

@@ -1,0 +1,46 @@
+product_definition_task:
+  description: >
+    Define the product scope and user stories for {project_name}.
+
+    Based on the project description: {project_description}
+
+    {feedback_section}
+
+    Produce the following:
+    - A clear problem statement
+    - Target users and their needs
+    - 3-8 user stories in "As a [user], I want [goal], so that [benefit]" format
+    - Acceptance criteria for each user story
+    - Priority levels (must-have, should-have, nice-to-have)
+    - Key assumptions and constraints
+
+    Focus on what needs to be built, not how to build it.
+  expected_output: >
+    A structured product requirements document containing a problem statement,
+    user stories with acceptance criteria, and priority classifications.
+  agent: product_manager
+
+requirements_analysis_task:
+  description: >
+    Analyze and detail the product requirements defined for {project_name}.
+
+    Based on the project description: {project_description}
+
+    {feedback_section}
+
+    Expand the product requirements into detailed specifications:
+    - Break each user story into detailed functional requirements
+    - Identify edge cases and error scenarios
+    - Define data models and relationships (fields, types, constraints)
+    - List API endpoints or interfaces needed (method, path, request/response)
+    - Identify external dependencies and integrations
+    - Document non-functional requirements (performance, security, scalability)
+    - Flag ambiguities or risks that need clarification
+
+    Be thorough and specific — a developer should be able to implement from this alone.
+  expected_output: >
+    A comprehensive requirements specification document with detailed functional
+    requirements, data models, interface definitions, edge cases, and non-functional
+    requirements. No ambiguity should remain.
+  agent: business_analyst
+  output_file: output/requirements.md

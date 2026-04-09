@@ -1,0 +1,29 @@
+technical_design_task:
+  description: >
+    Design the technical architecture for {project_name}.
+
+    Based on the requirements specification:
+    {requirements}
+
+    Produce the following:
+    - Technology stack selection with justification (language, framework, database, etc.)
+    - High-level system architecture (components, services, data flow)
+    - Directory/file structure for the project
+    - Detailed component designs with interfaces and responsibilities
+    - Data model design (schemas, migrations, indexes)
+    - API design (endpoints, request/response formats, error codes)
+    - Authentication and authorization approach
+    - Third-party integrations and libraries needed
+    - Development environment setup instructions
+    - Deployment considerations
+
+    Research current best practices and use web search when needed to validate
+    technology choices. Be specific — include actual library names, versions,
+    and configuration snippets where relevant.
+  expected_output: >
+    A comprehensive technical design document with architecture diagrams (described
+    in text), technology stack with justifications, file structure, component designs,
+    data models, API specifications, and setup instructions. Detailed enough for a
+    developer to implement without further clarification.
+  agent: technical_lead
+  output_file: output/technical_design.md
